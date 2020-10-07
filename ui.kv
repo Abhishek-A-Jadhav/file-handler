@@ -1,0 +1,1236 @@
+#: import WipeTransition kivy.uix.screenmanager.WipeTransition
+
+ScreenManagement:
+    transition: WipeTransition(duration = 0.3)
+    Window1:
+    Window2:
+    Window3:
+    Window4:
+    Window5:
+    Window6:
+    Window7:
+    Window8:
+    Window9:
+    Window10:
+    Window11:
+
+<Window1>
+    name: "start"
+    Image:
+        source: "folder1.png"
+        size_hint_x: 0.25
+        pos: root.width * 0.38, root.height * 0.0
+
+    Button:
+        pos : (root.width / 2) - (root.width * 0.1 / 2), root.height * 0.05
+        size_hint: 0.1, 0.05
+        text: "Enter"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "home"
+
+
+<Window2>
+    name: "home"
+
+    canvas:
+        Rectangle:
+            size: root.width * 0.00125, root.height * 0.03
+            pos: root.width * 0.01, root.height * 0.175
+
+    Image:
+        source: "home_info.png"
+        size_hint_x: 0.55
+        pos: root.width * 0.3, -root.height * 0.0
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.9
+        size_hint: 0.1, 0.075
+        text: "Copy"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "copy_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.795
+        size_hint: 0.1, 0.075
+        text: "Move"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "move_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.69
+        size_hint: 0.1, 0.075
+        text: "Rename"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "rename_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.585
+        size_hint: 0.1, 0.075
+        text: "Delete"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "delete_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.48
+        size_hint: 0.1, 0.075
+        text: "Auto-Sort"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "autoSort"
+
+    Button:
+        pos : root.width * 0.02, root.height * .155
+        size_hint: 0.1, 0.075
+        text: "Home"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "home"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Help"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "start"
+
+
+<Window3>
+    name: "copy"
+    Button:
+        pos : root.width * 0.02, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Home"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "home"
+        on_press: root.reset()
+
+    Label:
+        text: "Path"
+        pos: -root.width * 0.4, root.height * 0.31
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: workPathInput
+        hint_text: "Path to directory..."
+        font_size: root.height * 0.0265
+        pos: root.width * 0.124, root.height * 0.785
+        size_hint: 0.45, 0.045
+        multiline: False
+
+    Label:
+        text: "Filter"
+        pos: root.width * 0.198, root.height * 0.4
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: filter
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.875
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Label:
+        text: "Extension"
+        pos: root.width * 0.1825, root.height * 0.31
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: ext
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.785
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Button:
+        id: listButton
+        pos : root.width * 0.795, root.height * 0.7
+        size_hint: 0.07, 0.045
+        text: "List"
+        font_size: root.height * 0.025
+        on_press: root.autoSelection()
+
+    Button:
+        pos : root.width * 0.875, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Start Copy"
+        font_size: root.height * 0.03
+        on_press: root.copy()
+
+    TextInput:
+        id: selectedFileList
+        hint_text: "List of selected files...                     (empty)"
+        font_size: root.height * 0.02
+        pos: root.width * 0.02, root.height * 0.23
+        size_hint: 0.2, 0.5
+        multiline: True
+
+    TextInput:
+        id: manFileList
+        hint_text: "Manually selected files...                (empty)"
+        font_size: root.height * 0.02
+        pos: root.width * 0.26, root.height * 0.23
+        size_hint: 0.2, 0.5
+        multiline: True
+
+    TextInput:
+        id: finalList
+        hint_text: "Final list...                                          (empty)"
+        font_size: root.height * 0.02
+        pos: root.width * 0.5, root.height * 0.23
+        size_hint: 0.2, 0.5
+        multiline: True
+
+    Label:
+        text: "(Changes made cannot be undone. Verify files before proceeding.)"
+        pos: -root.width * 0.139, -root.height * 0.3
+        font_size: root.height * 0.015
+
+    Label:
+        text: "Add files manually"
+        pos: root.width * 0.325, root.height * 0.1
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: addMan
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.52
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Button:
+        pos : root.width * 0.79, root.height * 0.45
+        size_hint: 0.07, 0.045
+        text: "Add"
+        font_size: root.height * 0.025
+        on_press: root.addManually()
+
+    Label:
+        text: "Remove files manually"
+        pos: root.width * 0.325, -root.height * 0.12
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: removeMan
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.3
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Button:
+        pos : root.width * 0.79, root.height * 0.23
+        size_hint: 0.07, 0.045
+        text: "Remove"
+        font_size: root.height * 0.025
+        on_press: root.removeManually()
+
+    Label:
+        text: "Total: "
+        pos: -root.width * 0.302, -root.height * 0.41
+        font_size: root.height * 0.03
+
+    Label:
+        id: totalFiles
+        pos: -root.width * 0.252, -root.height * 0.4
+        font_size: root.height * 0.06
+
+    TextInput:
+        id: destPathInput
+        hint_text: "Path to destination directory..."
+        font_size: root.height * 0.0265
+        pos: root.width * 0.4, root.height * 0.0675
+        size_hint: 0.45, 0.045
+        multiline: False
+
+    Label:
+        text: "Destination"
+        pos: -root.width * 0.146, -root.height * 0.408
+        font_size: root.height * 0.0265
+
+    Label:
+        text: "Copy"
+        pos: -root.width * 0.45, root.height * 0.42
+        font_size: root.height * 0.06
+
+    Label:
+        text: "+"
+        pos: -root.width * 0.26, -root.height * 0.035
+        font_size: root.height * 0.07
+
+    Label:
+        text: "="
+        pos: -root.width * 0.02, -root.height * 0.035
+        font_size: root.height * 0.07
+
+    Button:
+        pos : root.width * 0.565, root.height * 0.17
+        size_hint: 0.07, 0.045
+        text: "Compute"
+        font_size: root.height * 0.025
+        on_press: root.compute()
+
+    Label:
+        id: status
+        pos: -root.width * 0.36, root.height * 0.4
+        font_size: root.height * 0.03
+
+    Label:
+        id: success
+        pos: -root.width * 0.15, root.height * 0.4
+        font_size: root.height * 0.03
+
+    Button:
+        pos : root.width * 0.005, root.height * 0.785
+        size_hint: 0.07, 0.045
+        text: "Reset"
+        font_size: root.height * 0.025
+        on_press: root.reset()
+
+
+<Window4>
+    name: "move"
+    Button:
+        pos : root.width * 0.02, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Home"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "home"
+        on_press: root.reset()
+
+    Label:
+        text: "Path"
+        pos: -root.width * 0.4, root.height * 0.31
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: workPathInput
+        hint_text: "Path to directory..."
+        font_size: root.height * 0.0265
+        pos: root.width * 0.124, root.height * 0.785
+        size_hint: 0.45, 0.045
+        multiline: False
+
+    Label:
+        text: "Filter"
+        pos: root.width * 0.198, root.height * 0.4
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: filter
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.875
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Label:
+        text: "Extension"
+        pos: root.width * 0.1825, root.height * 0.31
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: ext
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.785
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Button:
+        id: listButton
+        pos : root.width * 0.795, root.height * 0.7
+        size_hint: 0.07, 0.045
+        text: "List"
+        font_size: root.height * 0.025
+        on_press: root.autoSelection()
+
+    Button:
+        pos : root.width * 0.875, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Start Move"
+        font_size: root.height * 0.03
+        on_press: root.move()
+
+    TextInput:
+        id: selectedFileList
+        hint_text: "List of selected files...                     (empty)"
+        font_size: root.height * 0.02
+        pos: root.width * 0.02, root.height * 0.23
+        size_hint: 0.2, 0.5
+        multiline: True
+
+    TextInput:
+        id: manFileList
+        hint_text: "Manually selected files...                (empty)"
+        font_size: root.height * 0.02
+        pos: root.width * 0.26, root.height * 0.23
+        size_hint: 0.2, 0.5
+        multiline: True
+
+    TextInput:
+        id: finalList
+        hint_text: "Final list...                                          (empty)"
+        font_size: root.height * 0.02
+        pos: root.width * 0.5, root.height * 0.23
+        size_hint: 0.2, 0.5
+        multiline: True
+
+    Label:
+        text: "(Changes made cannot be undone. Verify files before proceeding.)"
+        pos: -root.width * 0.139, -root.height * 0.3
+        font_size: root.height * 0.015
+
+    Label:
+        text: "Add files manually"
+        pos: root.width * 0.325, root.height * 0.1
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: addMan
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.52
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Button:
+        pos : root.width * 0.79, root.height * 0.45
+        size_hint: 0.07, 0.045
+        text: "Add"
+        font_size: root.height * 0.025
+        on_press: root.addManually()
+
+    Label:
+        text: "Remove files manually"
+        pos: root.width * 0.325, -root.height * 0.12
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: removeMan
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.3
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Button:
+        pos : root.width * 0.79, root.height * 0.23
+        size_hint: 0.07, 0.045
+        text: "Remove"
+        font_size: root.height * 0.025
+        on_press: root.removeManually()
+
+    Label:
+        text: "Total: "
+        pos: -root.width * 0.302, -root.height * 0.41
+        font_size: root.height * 0.03
+
+    Label:
+        id: totalFiles
+        pos: -root.width * 0.252, -root.height * 0.4
+        font_size: root.height * 0.06
+
+    TextInput:
+        id: destPathInput
+        hint_text: "Path to destination directory..."
+        font_size: root.height * 0.0265
+        pos: root.width * 0.4, root.height * 0.0675
+        size_hint: 0.45, 0.045
+        multiline: False
+
+    Label:
+        text: "Destination"
+        pos: -root.width * 0.146, -root.height * 0.408
+        font_size: root.height * 0.0265
+
+    Label:
+        text: "Move"
+        pos: -root.width * 0.45, root.height * 0.42
+        font_size: root.height * 0.06
+
+    Label:
+        text: "+"
+        pos: -root.width * 0.26, -root.height * 0.035
+        font_size: root.height * 0.07
+
+    Label:
+        text: "="
+        pos: -root.width * 0.02, -root.height * 0.035
+        font_size: root.height * 0.07
+
+    Button:
+        pos : root.width * 0.565, root.height * 0.17
+        size_hint: 0.07, 0.045
+        text: "Compute"
+        font_size: root.height * 0.025
+        on_press: root.compute()
+
+    Label:
+        id: status
+        pos: -root.width * 0.36, root.height * 0.4
+        font_size: root.height * 0.03
+
+    Label:
+        id: success
+        pos: -root.width * 0.15, root.height * 0.4
+        font_size: root.height * 0.03
+
+    Button:
+        pos : root.width * 0.005, root.height * 0.785
+        size_hint: 0.07, 0.045
+        text: "Reset"
+        font_size: root.height * 0.025
+        on_press: root.reset()
+
+
+<Window5>
+    name: "rename"
+    Button:
+        pos : root.width * 0.02, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Home"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "home"
+        on_press: root.reset()
+
+    Label:
+        text: "Path"
+        pos: -root.width * 0.4, root.height * 0.31
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: workPathInput
+        hint_text: "Path to directory..."
+        font_size: root.height * 0.0265
+        pos: root.width * 0.124, root.height * 0.785
+        size_hint: 0.45, 0.045
+        multiline: False
+
+    Label:
+        text: "Filter"
+        pos: root.width * 0.198, root.height * 0.4
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: filter
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.875
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Label:
+        text: "Extension"
+        pos: root.width * 0.1825, root.height * 0.31
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: ext
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.785
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Button:
+        id: listButton
+        pos : root.width * 0.795, root.height * 0.7
+        size_hint: 0.07, 0.045
+        text: "List"
+        font_size: root.height * 0.025
+        on_press: root.autoSelection()
+
+    Button:
+        pos : root.width * 0.86, root.height * 0.05
+        size_hint: 0.12, 0.075
+        text: "Start Rename"
+        font_size: root.height * 0.03
+        on_press: root.generateName()
+
+    TextInput:
+        id: selectedFileList
+        hint_text: "List of selected files...                     (empty)"
+        font_size: root.height * 0.02
+        pos: root.width * 0.124, root.height * 0.23
+        size_hint: 0.2, 0.5
+        multiline: True
+
+    TextInput:
+        id: preview
+        hint_text: "Preview of files                                (empty)"
+        font_size: root.height * 0.02
+        pos: root.width * 0.374, root.height * 0.23
+        size_hint: 0.2, 0.5
+        multiline: True
+
+    Label:
+        text: "(Changes made cannot be undone. Verify files before proceeding.)"
+        pos: -root.width * 0.2753, -root.height * 0.3
+        font_size: root.height * 0.015
+
+    Label:
+        text: "Pattern"
+        pos: root.width * 0.192, root.height * 0.045
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: pattern
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.52
+        size_hint: 0.165, 0.045
+        multiline: False
+
+    Button:
+        pos : root.width * 0.9, root.height * 0.522
+        size_hint: 0.05, 0.04
+        text: "Ok"
+        font_size: root.height * 0.025
+        on_press: root.eg()
+
+    Label:
+        text: "Prefix"
+        pos: root.width * 0.196, -root.height * 0.04
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: prefix
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.4365
+        size_hint: 0.165, 0.045
+        multiline: False
+
+    Button:
+        pos : root.width * 0.9, root.height * 0.4375
+        size_hint: 0.05, 0.04
+        text: "Ok"
+        font_size: root.height * 0.025
+        on_press: root.eg()
+
+    Label:
+        text: "Suffix"
+        pos: root.width * 0.195, -root.height * 0.124
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: suffix
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.354
+        size_hint: 0.165, 0.045
+        multiline: False
+
+    Button:
+        pos : root.width * 0.9, root.height * 0.355
+        size_hint: 0.05, 0.04
+        text: "Ok"
+        font_size: root.height * 0.025
+        on_press: root.eg()
+
+    Label:
+        text: "Total: "
+        pos: -root.width * 0.302, -root.height * 0.41
+        font_size: root.height * 0.03
+
+    Label:
+        id: totalFiles
+        pos: -root.width * 0.252, -root.height * 0.4
+        font_size: root.height * 0.06
+
+    Label:
+        text: "Rename"
+        pos: -root.width * 0.43, root.height * 0.42
+        font_size: root.height * 0.06
+
+    Label:
+        text: "->"
+        pos: -root.width * 0.15, -root.height * 0.035
+        font_size: root.height * 0.045
+
+    Button:
+        pos : root.width * 0.438, root.height * 0.17
+        size_hint: 0.07, 0.045
+        text: "Preview"
+        font_size: root.height * 0.025
+        on_press: root.preview()
+
+    Label:
+        id: success
+        pos: -root.width * 0.02, -root.height * 0.41
+        font_size: root.height * 0.03
+
+    Button:
+        pos : root.width * 0.005, root.height * 0.785
+        size_hint: 0.07, 0.045
+        text: "Reset"
+        font_size: root.height * 0.025
+        on_press: root.reset()
+
+    Label:
+        text: "Example:"
+        pos: root.width * 0.195, -root.height * 0.2
+        font_size: root.height * 0.0265
+
+    Label:
+        id: eg
+        pos: root.width * 0.32, -root.height * 0.2
+        font_size: root.height * 0.0265
+
+<Window6>
+    name: "delete"
+    Button:
+        pos : root.width * 0.02, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Home"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "home"
+        on_press: root.reset()
+
+    Label:
+        text: "Path"
+        pos: -root.width * 0.4, root.height * 0.31
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: workPathInput
+        hint_text: "Path to directory..."
+        font_size: root.height * 0.0265
+        pos: root.width * 0.124, root.height * 0.785
+        size_hint: 0.45, 0.045
+        multiline: False
+
+    Label:
+        text: "Filter"
+        pos: root.width * 0.198, root.height * 0.4
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: filter
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.875
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Label:
+        text: "Extension"
+        pos: root.width * 0.1825, root.height * 0.31
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: ext
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.785
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Button:
+        id: listButton
+        pos : root.width * 0.795, root.height * 0.7
+        size_hint: 0.07, 0.045
+        text: "List"
+        font_size: root.height * 0.025
+        on_press: root.autoSelection()
+
+    Button:
+        pos : root.width * 0.875, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Start Delete"
+        font_size: root.height * 0.03
+        on_press: root.delete()
+
+    TextInput:
+        id: selectedFileList
+        hint_text: "List of selected files...                     (empty)"
+        font_size: root.height * 0.02
+        pos: root.width * 0.02, root.height * 0.23
+        size_hint: 0.2, 0.5
+        multiline: True
+
+    TextInput:
+        id: manFileList
+        hint_text: "Manually selected files...                (empty)"
+        font_size: root.height * 0.02
+        pos: root.width * 0.26, root.height * 0.23
+        size_hint: 0.2, 0.5
+        multiline: True
+
+    TextInput:
+        id: finalList
+        hint_text: "Final list...                                          (empty)"
+        font_size: root.height * 0.02
+        pos: root.width * 0.5, root.height * 0.23
+        size_hint: 0.2, 0.5
+        multiline: True
+
+    Label:
+        text: "(Changes made cannot be undone. Verify files before proceeding.)"
+        pos: -root.width * 0.139, -root.height * 0.3
+        font_size: root.height * 0.015
+
+    Label:
+        text: "Add files manually"
+        pos: root.width * 0.325, root.height * 0.1
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: addMan
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.52
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Button:
+        pos : root.width * 0.79, root.height * 0.45
+        size_hint: 0.07, 0.045
+        text: "Add"
+        font_size: root.height * 0.025
+        on_press: root.addManually()
+
+    Label:
+        text: "Remove files manually"
+        pos: root.width * 0.325, -root.height * 0.12
+        font_size: root.height * 0.0265
+
+    TextInput:
+        id: removeMan
+        font_size: root.height * 0.0265
+        pos: root.width * 0.724, root.height * 0.3
+        size_hint: 0.2, 0.045
+        multiline: False
+
+    Button:
+        pos : root.width * 0.79, root.height * 0.23
+        size_hint: 0.07, 0.045
+        text: "Remove"
+        font_size: root.height * 0.025
+        on_press: root.removeManually()
+
+    Label:
+        text: "Total: "
+        pos: -root.width * 0.302, -root.height * 0.41
+        font_size: root.height * 0.03
+
+    Label:
+        id: totalFiles
+        pos: -root.width * 0.252, -root.height * 0.4
+        font_size: root.height * 0.06
+
+    Label:
+        text: "Delete"
+        pos: -root.width * 0.45, root.height * 0.42
+        font_size: root.height * 0.06
+
+    Label:
+        text: "+"
+        pos: -root.width * 0.26, -root.height * 0.035
+        font_size: root.height * 0.07
+
+    Label:
+        text: "="
+        pos: -root.width * 0.02, -root.height * 0.035
+        font_size: root.height * 0.07
+
+    Button:
+        pos : root.width * 0.565, root.height * 0.17
+        size_hint: 0.07, 0.045
+        text: "Compute"
+        font_size: root.height * 0.025
+        on_press: root.compute()
+
+    Label:
+        id: status
+        pos: -root.width * 0.36, root.height * 0.4
+        font_size: root.height * 0.03
+
+    Label:
+        id: success
+        pos: -root.width * 0.15, root.height * 0.4
+        font_size: root.height * 0.03
+
+    Button:
+        pos : root.width * 0.005, root.height * 0.785
+        size_hint: 0.07, 0.045
+        text: "Reset"
+        font_size: root.height * 0.025
+        on_press: root.reset()
+
+
+<Window7>
+    name: "copy_info"
+
+    canvas:
+        Rectangle:
+            size: root.width * 0.00125, root.height * 0.03
+            pos: root.width * 0.01, root.height * 0.9225
+
+    Label:
+        text: "Usage"
+        pos: 0, root.height * 0.44
+        font_size: root.height * 0.03
+
+    Image:
+        source: "copy_info.png"
+        size_hint_x: 0.8
+        pos: root.width * 0.15, -root.height * 0.01
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.9
+        size_hint: 0.1, 0.075
+        text: "Copy"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "copy_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.795
+        size_hint: 0.1, 0.075
+        text: "Move"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "move_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.69
+        size_hint: 0.1, 0.075
+        text: "Rename"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "rename_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.585
+        size_hint: 0.1, 0.075
+        text: "Delete"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "delete_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.48
+        size_hint: 0.1, 0.075
+        text: "Auto-Sort"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "autoSort"
+
+    Button:
+        pos : root.width * 0.02, root.height * .155
+        size_hint: 0.1, 0.075
+        text: "Home"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "home"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Help"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "start"
+
+    Button:
+        pos : root.width * 0.88, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Start"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "copy"
+
+
+<Window8>
+    name: "move_info"
+
+    canvas:
+        Rectangle:
+            size: root.width * 0.00125, root.height * 0.03
+            pos: root.width * 0.01, root.height * 0.8195
+
+    Label:
+        text: "Usage"
+        pos: 0, root.height * 0.44
+        font_size: root.height * 0.03
+
+    Image:
+        source: "move_info.png"
+        size_hint_x: 0.8
+        pos: root.width * 0.15, -root.height * 0.01
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.9
+        size_hint: 0.1, 0.075
+        text: "Copy"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "copy_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.795
+        size_hint: 0.1, 0.075
+        text: "Move"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "move_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.69
+        size_hint: 0.1, 0.075
+        text: "Rename"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "rename_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.585
+        size_hint: 0.1, 0.075
+        text: "Delete"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "delete_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.48
+        size_hint: 0.1, 0.075
+        text: "Auto-Sort"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "autoSort"
+
+    Button:
+        pos : root.width * 0.02, root.height * .155
+        size_hint: 0.1, 0.075
+        text: "Home"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "home"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Help"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "start"
+
+    Button:
+        pos : root.width * 0.88, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Start"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "move"
+
+
+<Window9>
+    name: "rename_info"
+
+    canvas:
+        Rectangle:
+            size: root.width * 0.00125, root.height * 0.03
+            pos: root.width * 0.01, root.height * 0.7105
+
+    Label:
+        text: "Usage"
+        pos: 0, root.height * 0.44
+        font_size: root.height * 0.03
+
+    Image:
+        source: "rename_info.png"
+        size_hint_x: 0.9
+        pos: root.width * 0.12, -root.height * 0.01
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.9
+        size_hint: 0.1, 0.075
+        text: "Copy"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "copy_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.795
+        size_hint: 0.1, 0.075
+        text: "Move"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "move_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.69
+        size_hint: 0.1, 0.075
+        text: "Rename"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "rename_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.585
+        size_hint: 0.1, 0.075
+        text: "Delete"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "delete_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.48
+        size_hint: 0.1, 0.075
+        text: "Auto-Sort"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "autoSort"
+
+    Button:
+        pos : root.width * 0.02, root.height * .155
+        size_hint: 0.1, 0.075
+        text: "Home"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "home"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Help"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "start"
+
+    Button:
+        pos : root.width * 0.88, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Start"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "rename"
+
+
+<Window10>
+    name: "delete_info"
+
+    canvas:
+        Rectangle:
+            size: root.width * 0.00125, root.height * 0.03
+            pos: root.width * 0.01, root.height * 0.606
+
+    Label:
+        text: "Usage"
+        pos: 0, root.height * 0.44
+        font_size: root.height * 0.03
+
+    Image:
+        source: "delete_info.png"
+        size_hint_x: 0.8
+        pos: root.width * 0.15, -root.height * 0.01
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.9
+        size_hint: 0.1, 0.075
+        text: "Copy"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "copy_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.795
+        size_hint: 0.1, 0.075
+        text: "Move"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "move_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.69
+        size_hint: 0.1, 0.075
+        text: "Rename"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "rename_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.585
+        size_hint: 0.1, 0.075
+        text: "Delete"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "delete_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.48
+        size_hint: 0.1, 0.075
+        text: "Auto-Sort"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "autoSort"
+
+    Button:
+        pos : root.width * 0.02, root.height * .155
+        size_hint: 0.1, 0.075
+        text: "Home"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "home"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Help"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "start"
+
+    Button:
+        pos : root.width * 0.88, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Start"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "delete"
+
+
+<Window11>
+    name: "autoSort"
+
+    canvas:
+        Rectangle:
+            size: root.width * 0.00125, root.height * 0.03
+            pos: root.width * 0.01, root.height * 0.502
+
+    Label:
+        text: "Usage"
+        pos: 0, root.height * 0.44
+        font_size: root.height * 0.03
+
+    Image:
+        source: "autosort_info.png"
+        size_hint_x: 0.5
+        pos: root.width * 0.3, root.height * 0.2
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.9
+        size_hint: 0.1, 0.075
+        text: "Copy"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "copy_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.795
+        size_hint: 0.1, 0.075
+        text: "Move"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "move_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.69
+        size_hint: 0.1, 0.075
+        text: "Rename"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "rename_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.585
+        size_hint: 0.1, 0.075
+        text: "Delete"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "delete_info"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.48
+        size_hint: 0.1, 0.075
+        text: "Auto-Sort"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "autoSort"
+        on_press: root.reset()
+
+    Button:
+        pos : root.width * 0.02, root.height * .155
+        size_hint: 0.1, 0.075
+        text: "Home"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "home"
+
+    Button:
+        pos : root.width * 0.02, root.height * 0.05
+        size_hint: 0.1, 0.075
+        text: "Help"
+        font_size: root.height * 0.03
+        on_press: app.root.current = "start"
+    Button:
+        pos : root.width * 0.74, root.height * 0.05
+        size_hint: 0.1, 0.05
+        text: "Auto-Sort Folder"
+        font_size: root.height * 0.02
+        on_press: root.autoSort()
+
+    Label:
+        id: status
+        pos: root.width * 0.4, -root.height * 0.4225
+        font_size: root.height * 0.03
+
+    Label:
+        text: "Destination"
+        pos: -root.width * 0.23, -root.height * 0.4225
+        font_size: root.height * 0.03
+
+    TextInput:
+        id: destPath
+        font_size: root.height * 0.0265
+        pos: root.width * 0.3225, root.height * 0.053
+        size_hint: 0.4, 0.045
+        multiline: False
