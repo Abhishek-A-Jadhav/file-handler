@@ -12,6 +12,9 @@ _**P.S. First time making of a UI based application.**_
 
 ---
 #### Usage:
+
+##### Just run `main.py` through the terminal. Make sure you have `kivy` installed on your device. Works on Windows, Mac & Linux. Could be used on mobile devices if the user has basic understanding of file-management in mobile devices.
+
 - ##### Copy:
     - **Path:** Enter the path to the directory where the files are located.
 
