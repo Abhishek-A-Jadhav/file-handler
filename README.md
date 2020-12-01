@@ -67,8 +67,8 @@ _**P.S. First time making of a UI based application.**_
 - ##### Delete:
     **Basically similar steps to Copy.**
 
-- ##### Auto Scroll:
-    This will automatically sort all the files in given directory to the folders of their respecive types. The folders will be created automatically. \
+- ##### Auto Sort:
+    This will automatically sort all the files in given directory to the folders of their respecive types. The folders will be created automatically.
 
     Folders include:
     - Documents
